@@ -1,4 +1,3 @@
-/*jshint esversion: 6*/
 var global = window || GLOBAL;
 
 /****************************************************************************************
@@ -8,125 +7,165 @@ var global = window || GLOBAL;
  * documentation up in a browser window at all times when working on projects!          *
  ****************************************************************************************/
 
- global.bruhdash = {
+global.bruhdash = {
 
   // returns the first element of an array
   first: function (arr) {
-    return arr[0];
+      return arr[0];
   },
 
   // returns the last element of an array
   last: function (arr) {
-    return arr[arr.length-1];
+      return arr[arr.length-1];
   },
 
   // returns the index of the first matching element from left to right
-  indexOf: function (arr, element) {
-    for (let i = 0; i < arr.length; i++){
-      if(arr[i] === element){
-        return i;
+  indexOf: function (array, test) {
+      for(var i=0; i < array.length; i++){
+        if (array[i] == test) {
+          return i;
+        }
       }
-    }
-    return -1;
+        return -1;
   },
 
-  // returns the index of the first matching element from right to left
-  lastIndexOf: function (arr, element) {
-    for (let i = arr.length -1; i >= 0; i--){
-      if(arr[i] === element){
+  // returns the index of the first matching element from left to right
+  lastIndexOf: function (arr, test, first) {
+    if (first === undefined){
+      first = arr.length - 1;
+    }
+    for (var i = first; i >= 0; i--) {
+      if (arr[i] === test){
         return i;
       }
     }
-    return -1;
+   return -1;
   },
 
   // returns an array with all elements except for the last element
-  initial: function (arr) {
-    arr.pop();
-    return arr;
+  initial: function (hi) {
+      hi.pop();
+      return hi;
   },
 
   // returns an array with all falsey values removed
   compact: function(arr) {
-    let arr2 = [];
-    for (let i = 0; i < arr.length; i++){
-      if(arr[i] === null || arr[i] === 0 || arr[i] === undefined || arr[i] === false || arr[i] === "" || isNaN(arr[i])){
-      } else{
-        arr2.push(arr[i]);
+      var secondArr =[];
+      for(var i=0; i<arr.length; i++){
+        if (arr[i] === false || arr[i] === undefined || arr[i] === null || arr[i] === "" || arr[i] === 0 || isNaN(arr[i])){
+        } else {
+          secondArr.push(arr[i]);
+        }
       }
-    }
-    return arr2;
+      return secondArr;
   },
 
   // creates a slice of an array from the start index up to but not including the end index
-  slice: function (arr, start, end) {
-    let newArr = arr.slice(start, end);
+   slice: function slice (arr, start, end) {
+    var newArr = arr.slice(start, end);
     return newArr;
   },
 
   // returns a slice of array with n elements dropped from the beignning
-  drop: function(arr, n){
-    if( isNaN(n)){
-      n = 1;
-
+  drop: function(arr, number){
+    if (isNaN(number)){
+      number = 1;
     }
-    let newArr = arr.slice(n);
+    var newArr = arr.slice(number);
     return newArr;
-
   },
 
   // returns a slice of array with n elements dropped from the end
-  dropRight: function(arr, n) {
-    if( isNaN(n)){
-      n = -1;
+  dropRight: function(arr, number) {
+    if(isNaN(number)) {
+      number = -1;
     }
-    else if ( n === 0){
-     n = undefined;
-   }
-   else {
-    n *= -1;
-  }
-  let newArr = arr.slice(0, n);
-  return newArr;
-},
+    else if (number === 0) {
+      number = undefined;
+    }
+    else {
+      number *= -1;
+    }
+    var newArr =arr.slice(0, number);
+    return newArr;
+  },
 
   // creates a slice of an array with n elements taken from the beginning
-  take: function (arr, n) {
-    if ( isNaN(n)){
-      n = 1;
+  take: function (arr, number) {
+    if (isNaN(number)) {
+      number = 1;
     }
-    return  arr.slice(0, n);
+    return arr.slice(0, number);
   },
 
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
+  takeRight: function (arr, number) {
+    if (isNaN(number)) {
+      number =1;
+    }
+    else if (number > arr.length) {
+      number = arr.length;
+    }
+    return arr.slice(arr.length - number);
   },
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
-  fill: function() {
-
+  fill: function(arr, test, first, last) {
+    if (isNaN(first)){
+      first = 0;
+    }
+    if (isNaN(last)){
+      last = arr.length;
+    }
+    for (var i = first; i < last; i++) {
+      arr[i] = test;
+    }
+    return arr;
   },
 
   // removes all given values from an array
-  pull: function () {
+  pull: function (arr, test) {
+    for (var i=0; i < arr.length; i++) {
+      for (var j=0; j< test.length; j++){
+        if (arr[i] === test[j]){
+          arr.splice(i,1);
+      }
+    }
+  }
 
+    return arr;
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (arr, indices) {
+    for (var i = 0; i < indices.length; i++); {
+      arr.splice(indices[i]-i, 1);
+      i++;
+    }
+    return arr;
   },
 
   // creates an array excluding all the specified values
-  without: function() {
+  without: function(){
 
   },
 
   // returns an array with specified values excluded
-  difference: function() {
-
+ difference: function(arr, secondArr) {
+    var thirdArr = [];
+    for (var i = 0; i < arr.length; i++) {
+      var found = false;
+      for (var j = 0; j < secondArr.length; j++) {
+        if (arr[i] === secondArr[j]){
+          found = true;
+        }
+      }
+      if (found === false){
+        thirdArr.push(arr[i]);
+      }
+    }
+    return thirdArr;
   },
 
   /*******************
