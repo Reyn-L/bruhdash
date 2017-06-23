@@ -99,24 +99,53 @@ var global = window || GLOBAL;
   },
 
   // creates a slice of an array with n elements taken from the end
-  takeRight: function () {
-
-  },
+  takeRight: function (arr, n) {
+    if(isNaN(n)){
+      return arr.slice(arr.length -1);
+    }else if(n > arr.length){
+     n = arr.length;
+   } else{
+    return arr.slice(arr.length - n);
+  }
+},
 
   // fills elements of array with specified value from the start index
   // up to but not including the end index
-  fill: function() {
-
+  fill: function(arr, n, start, end) {
+    if( isNaN(end)){
+      end = arr.length;
+    }
+    if(isNaN(start)){
+      start = 0;
+    }
+    for (let i = start; i < end; i++){
+      arr[i]= n;
+    }
+    return arr;
   },
 
   // removes all given values from an array
-  pull: function () {
-
+  pull: function (arr, indices) {
+    for (let i = 0; i < arr.length; i++){
+      for (let j = 0; j < indices.length; j++){
+        if (arr[i] === indices[j]){
+          arr.splice(i,1);
+        }
+      }
+    }
+    return arr;
   },
 
   // removes elements of an array corresponding to the given indices
-  pullAt: function () {
-
+  pullAt: function (arr ,indices) {
+    for ( let i = 0; i < arr.length; i++){
+      for (let j = 0; j < indices.length; j++){
+        if(arr[i] === indices[j]){
+          indices.splice(j,1);
+        }
+      }
+    }
+    return indices;
   },
 
   // creates an array excluding all the specified values
